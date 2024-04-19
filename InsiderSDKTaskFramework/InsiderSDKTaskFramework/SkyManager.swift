@@ -6,13 +6,36 @@
 //
 
 import UIKit
+import UserNotifications
 
 class SkyManager: NSObject {
     private var skyList:[Star] = []
+    var reloadView: (() -> ())?
+    
+    private let notificationIdentifier = "NumberOfStars"
+    private let notifyAfter = 2.0
     
     public override init() { 
         super.init()
         getFromStorage()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), 
+                                               name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
+    @objc func appMovedToBackground() {
+        print("=>The application has been sent to the background.\nA notification will be sent after \(notifyAfter) seconds.")
+        createNotification()
+    }
+    @objc func appMovedToForeground() {
+        print("=>The application has been come to the Foreground.\nThe notification will be removed.")
+        
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: [notificationIdentifier])
     }
     
     func addStarInterface(type: StarSize?) {
@@ -61,8 +84,10 @@ class SkyManager: NSObject {
     }
     
     private func saveData() {
-        guard let encodedData = try? JSONEncoder().encode(skyList) else  { return }
-        UserDefaults.standard.setValue(encodedData, forKey: "skyList")
+        DispatchQueue.global().async { [weak self] in
+            guard let encodedData = try? JSONEncoder().encode(self?.skyList) else  { return }
+            UserDefaults.standard.setValue(encodedData, forKey: "skyList")
+        }
     }
     
     private func getFromStorage() {
@@ -74,7 +99,20 @@ class SkyManager: NSObject {
             }
             skyList = encodedData
         }
+    }
+    deinit {
+        createNotification()
+    }
+    
+    func createNotification() {
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = "Sky"
+        notificationContent.subtitle = "number of stars: \(skyList.count)"
         
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: notifyAfter , repeats: false)
+        
+        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
     }
 }
 
@@ -95,20 +133,25 @@ extension SkyManager: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension SkyManager: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        guard notificationIdentifier == response.notification.request.identifier else { return }
+        addStarInterface(type: nil)
+        reloadView?()
+        print("**Came From Notification")
+        printInfo(debugMod: true)
+    }
+}
+
 //Source: https://sarunw.com/posts/how-to-get-root-view-controller/
 extension UIApplication {
     var firstKeyWindow: UIWindow? {
-        // 1
         let windowScenes = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
-        // 2
         let activeScene = windowScenes
             .filter { $0.activationState == .foregroundActive }
-        // 3
         let firstActiveScene = activeScene.first
-        // 4
         let keyWindow = firstActiveScene?.keyWindow
-        
         return keyWindow
     }
 }

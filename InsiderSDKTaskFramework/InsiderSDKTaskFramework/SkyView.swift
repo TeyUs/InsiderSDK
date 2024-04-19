@@ -27,7 +27,7 @@ public class SkyView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
-        DispatchQueue.main.async { self.tableView.reloadData() }
+        manager.reloadView = { DispatchQueue.main.async { self.tableView.reloadData() } }
     }
     
     public func setupView() {
@@ -43,9 +43,5 @@ public class SkyView: UIView {
     public func addStarInterface(type: StarSize?) {
         manager.addStarInterface(type: type)
         DispatchQueue.main.async { self.tableView.reloadData() }
-    }
-    
-    deinit {
-        print("SkyView deinited")
     }
 }
