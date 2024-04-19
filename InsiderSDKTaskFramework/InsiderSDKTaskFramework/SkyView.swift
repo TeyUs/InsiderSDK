@@ -9,19 +9,29 @@ import UIKit
 
 public class SkyView: UIView {
     let manager = SkyManager()
-    var viewController: UIViewController?
     
     private lazy var tableView: UITableView = {
         let temp = UITableView()
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.delegate = manager
         temp.dataSource = manager
+        temp.register(SkyCell.self, forCellReuseIdentifier: SkyCell.identifier)
         return temp
     }()
     
-    public func setupView(_ viewController: UIViewController) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+        DispatchQueue.main.async { self.tableView.reloadData() }
+    }
+    
+    public func setupView() {
         self.addSubview(tableView)
-        manager.view = viewController
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -33,6 +43,9 @@ public class SkyView: UIView {
     public func addStarInterface(type: StarSize?) {
         manager.addStarInterface(type: type)
         DispatchQueue.main.async { self.tableView.reloadData() }
-        self.tableView.reloadData()
+    }
+    
+    deinit {
+        print("SkyView deinited")
     }
 }

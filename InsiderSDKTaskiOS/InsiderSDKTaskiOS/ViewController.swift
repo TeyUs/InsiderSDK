@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        skyView.setupView(self)
     }
     
     @IBAction func smallStarButtonTapped(_ sender: Any) {

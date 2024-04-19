@@ -46,17 +46,17 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9PF-e9-pYy" customClass="SkyView" customModule="InsiderSDKTaskFramework">
-                                <rect key="frame" x="20" y="79" width="353" height="604.66666666666663"/>
-                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <rect key="frame" x="5" y="79" width="383" height="604.66666666666663"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstItem="9PF-e9-pYy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="AGX-dF-cWA"/>
+                            <constraint firstItem="9PF-e9-pYy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="AGX-dF-cWA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="W3i-b4-13E" secondAttribute="trailing" constant="10" id="aMn-yO-MJE"/>
                             <constraint firstItem="W3i-b4-13E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="dX0-Gy-ihR"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9PF-e9-pYy" secondAttribute="trailing" constant="20" id="f1G-RI-T9b"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9PF-e9-pYy" secondAttribute="trailing" constant="5" id="f1G-RI-T9b"/>
                             <constraint firstItem="W3i-b4-13E" firstAttribute="top" secondItem="9PF-e9-pYy" secondAttribute="bottom" constant="50" id="iHL-S8-Ify"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="W3i-b4-13E" secondAttribute="bottom" constant="50" id="lOp-HE-YbJ"/>
                             <constraint firstItem="9PF-e9-pYy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="wpw-B6-MTI"/>
@@ -72,8 +72,8 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
