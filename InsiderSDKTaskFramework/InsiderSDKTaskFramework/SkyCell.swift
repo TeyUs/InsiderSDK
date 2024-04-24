@@ -12,6 +12,7 @@ class SkyCell: UITableViewCell {
     static let identifier = "SkyCell"
     private let fontSize = 15.0
     
+//    MARK: UI Part
     private lazy var containerView: UIView = {
         let temp = UIView()
         temp.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +23,6 @@ class SkyCell: UITableViewCell {
         let temp = UIImageView()
         temp.translatesAutoresizingMaskIntoConstraints = false
         return temp
-        
     }()
     
     private lazy var sizeLabel: UILabel = {
@@ -114,13 +114,13 @@ class SkyCell: UITableViewCell {
         temp.alignment = UIStackView.Alignment.center
         temp.spacing   = 0
         
-//        temp.addArrangedSubview(starImage)
         temp.addArrangedSubview(sizeStackView)
         temp.addArrangedSubview(colorStackView)
         temp.addArrangedSubview(brightnessStackView)
         return temp
     }()
     
+    // MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         fetchStarImage()
@@ -133,6 +133,7 @@ class SkyCell: UITableViewCell {
         setupView()
     }
     
+    ///Fetches star image from link
     private func fetchStarImage() {
         let url = URL(string: "https://img.etimg.com/thumb/msid-72948091,width-650,imgsize-95069,,resizemode-4,quality-100/star_istock.jpg")
         DispatchQueue.global().async {
@@ -165,9 +166,15 @@ class SkyCell: UITableViewCell {
         ])
     }
     
+    /// retrieves data and places it in appropriate views
+    /// - Parameters:
+    ///   - star: to be displayed in the cell
     func setData(star: Star) {
         sizeValue.text = star.size.rawValue
         colorValue.text = star.color.rawValue
+        colorStackView.backgroundColor = star.color.uiColor
         brightnessValue.text = star.isbright ? "Bright" : "Not so bright"
+        brightnessStackView.backgroundColor = star.isbright ? .systemGray6 : .systemGray2
+        
     }
 }

@@ -35,6 +35,7 @@ class Star: Codable {
         case isbright
     }
     
+    /// Decoder for Star Class
     required public convenience init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let size = StarSize(rawValue: try values.decodeIfPresent(String.self, forKey: .size)!)!
@@ -43,6 +44,7 @@ class Star: Codable {
         self.init(size: size, color: color, isbright: isbright)
     }
     
+    /// Encoder for Star Class
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(size.rawValue, forKey: .size)
@@ -51,10 +53,14 @@ class Star: Codable {
     }
 }
 
+/// Possible Sizes of Stars
 public enum StarSize: String {
+    /// represents the **small** stars
     case S
+    /// represents the **big** stars
     case B
     
+    ///It gives to randomColor
     var color: StarColor {
         switch self {
         case .S:
@@ -65,6 +71,8 @@ public enum StarSize: String {
     }
 }
 
+/// Possible Colors of Stars
+/// There was a need to keep the names of the colors in string type.
 enum StarColor: String {
     case red
     case blue
@@ -73,7 +81,7 @@ enum StarColor: String {
     case purple
     case gray
     
-    var create: UIColor {
+    var uiColor: UIColor {
         switch self {
         case .red:
             return UIColor.red

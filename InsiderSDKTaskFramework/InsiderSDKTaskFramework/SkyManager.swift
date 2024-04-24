@@ -27,10 +27,15 @@ class SkyManager: NSObject {
         UNUserNotificationCenter.current().delegate = self
     }
     
+    /// If app goes to background(willResignActive) this method calls.
+    /// Crates a Notification
     @objc func appMovedToBackground() {
         print("=>The application has been sent to the background.\nA notification will be sent after \(notifyAfter) seconds.")
         createNotification()
     }
+    
+    /// If app comes from background(willEnterForeground) this method calls.
+    /// Deletes the Notification
     @objc func appMovedToForeground() {
         print("=>The application has been come to the Foreground.\nThe notification will be removed.")
         
@@ -38,16 +43,22 @@ class SkyManager: NSObject {
             .removePendingNotificationRequests(withIdentifiers: [notificationIdentifier])
     }
     
+    /// If user gives a non-nil value of StarSize as type parameter, (if there is more place) SDK adds in Sky.
+    /// If parameter is nil, SDK will remove all star from sky.
+    /// - Parameters:
+    ///   - type: The type of star wanted to add to sky, if nil will remove all star from sky.
     func addStarInterface(type: StarSize?) {
         if let type {
             checkAndAdd(size: type)
         } else {
             skyList.removeAll()
         }
+        reloadView?()
         printInfo(debugMod: true)
         saveData()
     }
     
+    /// If there is more place in the sky, SDK will be added to the sky, otherwise shows alert.
     private func checkAndAdd(size: StarSize) {
         if skyList.count >= 10 {
             print("Sky is full")
@@ -58,6 +69,7 @@ class SkyManager: NSObject {
         }
     }
     
+    /// Statically creating a alert.
     private func showAllert() {
         let alert = UIAlertController(title: "Sky is full!!", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -69,6 +81,8 @@ class SkyManager: NSObject {
         rootViewController?.present(alert, animated: true, completion: nil)
     }
     
+    /// If debugMod is true, additionally prints every elements of SkyList.
+    /// Otherwise prints just numbers of lights of bright stars.
     private func printInfo(debugMod: Bool = false) {
         if debugMod {
             print("***---***")
@@ -79,10 +93,12 @@ class SkyManager: NSObject {
         print("number of Bright Stars: \(brigtStarCount()), number of all element: \(skyList.count)")
     }
     
+    /// Calculates numbers of lights of bright stars.
     private func brigtStarCount() -> Int {
         skyList.reduce(0) { $1.isbright ? $0 + 1 : $0 }
     }
     
+    /// It saves to UserDefaults
     private func saveData() {
         DispatchQueue.global().async { [weak self] in
             guard let encodedData = try? JSONEncoder().encode(self?.skyList) else  { return }
@@ -90,6 +106,7 @@ class SkyManager: NSObject {
         }
     }
     
+    /// It gets from UserDefaults
     private func getFromStorage() {
         if let savedData = UserDefaults.standard.object(forKey: "skyList") as? Data {
             guard let encodedData = try? JSONDecoder().decode([Star].self, from: savedData) else { return }
@@ -100,10 +117,12 @@ class SkyManager: NSObject {
             skyList = encodedData
         }
     }
+    
     deinit {
         createNotification()
     }
     
+    /// It creates a notification.
     func createNotification() {
         let notificationContent = UNMutableNotificationContent()
         notificationContent.title = "Sky"
@@ -116,12 +135,13 @@ class SkyManager: NSObject {
     }
 }
 
+/// Creates TableView
 extension SkyManager: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return skyList.count
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let star = skyList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: SkyCell.identifier, for: indexPath) as! SkyCell
         cell.setData(star: star)
@@ -134,6 +154,7 @@ extension SkyManager: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SkyManager: UNUserNotificationCenterDelegate {
+    /// If user comes from notification, SDK will remove all stars from the Sky.
     @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard notificationIdentifier == response.notification.request.identifier else { return }
@@ -141,18 +162,5 @@ extension SkyManager: UNUserNotificationCenterDelegate {
         reloadView?()
         print("**Came From Notification")
         printInfo(debugMod: true)
-    }
-}
-
-//Source: https://sarunw.com/posts/how-to-get-root-view-controller/
-extension UIApplication {
-    var firstKeyWindow: UIWindow? {
-        let windowScenes = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-        let activeScene = windowScenes
-            .filter { $0.activationState == .foregroundActive }
-        let firstActiveScene = activeScene.first
-        let keyWindow = firstActiveScene?.keyWindow
-        return keyWindow
     }
 }

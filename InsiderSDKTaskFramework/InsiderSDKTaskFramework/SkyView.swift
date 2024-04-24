@@ -40,8 +40,11 @@ public class SkyView: UIView {
         ])
     }
     
+    /// If user gives a non-nil value of StarSize as type parameter, (if there is more place) SDK adds in Sky.
+    /// If parameter is nil, SDK will remove all star from sky.
+    /// - Parameters:
+    ///   - type: The size of star wanted to add to sky, if nil will remove all star from sky.
     public func addStarInterface(type: StarSize?) {
         manager.addStarInterface(type: type)
-        self.tableView.reloadData()
     }
 }

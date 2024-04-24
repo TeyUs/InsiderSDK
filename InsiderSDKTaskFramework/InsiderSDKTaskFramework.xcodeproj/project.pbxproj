@@ -13,6 +13,7 @@
 		2E037C902BD1A72800AD30ED /* SkyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E037C8F2BD1A72800AD30ED /* SkyManager.swift */; };
 		2E037C982BD1ACE700AD30ED /* SkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E037C972BD1ACE700AD30ED /* SkyView.swift */; };
 		2E037CA62BD29F5C00AD30ED /* SkyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E037CA52BD29F5C00AD30ED /* SkyCell.swift */; };
+		2E64C4032BD8FD6800B6B1AC /* UIApplication+firstKeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E64C4022BD8FD6800B6B1AC /* UIApplication+firstKeyWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		2E037C8F2BD1A72800AD30ED /* SkyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyManager.swift; sourceTree = "<group>"; };
 		2E037C972BD1ACE700AD30ED /* SkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyView.swift; sourceTree = "<group>"; };
 		2E037CA52BD29F5C00AD30ED /* SkyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyCell.swift; sourceTree = "<group>"; };
+		2E64C4022BD8FD6800B6B1AC /* UIApplication+firstKeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+firstKeyWindow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				2E037C8F2BD1A72800AD30ED /* SkyManager.swift */,
 				2E037C972BD1ACE700AD30ED /* SkyView.swift */,
 				2E037CA52BD29F5C00AD30ED /* SkyCell.swift */,
+				2E64C4022BD8FD6800B6B1AC /* UIApplication+firstKeyWindow.swift */,
 			);
 			path = InsiderSDKTaskFramework;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 				2E037C982BD1ACE700AD30ED /* SkyView.swift in Sources */,
 				2E037CA62BD29F5C00AD30ED /* SkyCell.swift in Sources */,
 				2E037C8E2BD1A52500AD30ED /* Star.swift in Sources */,
+				2E64C4032BD8FD6800B6B1AC /* UIApplication+firstKeyWindow.swift in Sources */,
 				2E037C902BD1A72800AD30ED /* SkyManager.swift in Sources */,
 				2E037C5D2BD1A49600AD30ED /* InsiderSDKTaskFramework.docc in Sources */,
 			);
