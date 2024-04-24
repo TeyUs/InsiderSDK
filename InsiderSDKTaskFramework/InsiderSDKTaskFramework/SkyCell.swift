@@ -142,6 +142,7 @@ class SkyCell: UITableViewCell {
             }
         }
     }
+    
     private func setupView() {
         addSubview(containerView)
         containerView.addSubview(starImage)

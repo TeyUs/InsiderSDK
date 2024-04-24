@@ -13,7 +13,7 @@ class SkyManager: NSObject {
     var reloadView: (() -> ())?
     
     private let notificationIdentifier = "NumberOfStars"
-    private let notifyAfter = 2.0
+    private let notifyAfter = 5.0
     
     public override init() { 
         super.init()
@@ -134,6 +134,7 @@ extension SkyManager: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SkyManager: UNUserNotificationCenterDelegate {
+    @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard notificationIdentifier == response.notification.request.identifier else { return }
         addStarInterface(type: nil)
