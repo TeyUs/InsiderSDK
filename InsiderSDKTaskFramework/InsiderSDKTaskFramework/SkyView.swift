@@ -30,7 +30,7 @@ public class SkyView: UIView {
         manager.reloadView = self.tableView.reloadData
     }
     
-    public func setupView() {
+    private func setupView() {
         self.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.topAnchor),

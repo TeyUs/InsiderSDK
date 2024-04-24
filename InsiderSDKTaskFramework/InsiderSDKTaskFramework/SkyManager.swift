@@ -15,7 +15,7 @@ class SkyManager: NSObject {
     private let notificationIdentifier = "NumberOfStars"
     private let notifyAfter = 5.0
     
-    public override init() { 
+    override init() { 
         super.init()
         getFromStorage()
         
